@@ -8,21 +8,20 @@ int main(int argc, char * argv[]){
   //ERROR string for you to use to pass automated tests (print stderrr!)
   //  -- "ERROR: require credit card number\n"
   if(argc == 1) {
-    printf("%d", )
     fprintf(stderr, "ERROR: require credit card number\n");
     return 1;
   }
 
   //  -- "ERROR: Invalid credit card number: Bad Length\n"
-  if(strlen(argv[0]) != 16) {
-    fprintf(stderr, "ERROR: require credit card number\n");
-    return 2;
+  if(strlen(argv[1]) != 16) {
+    fprintf(stderr, "ERROR: Invalid credit card number: Bad Length\n");
+    return 1;
   }
   //  -- "ERROR: Invalid credit card number: Bad number '%c'\n"
-  for(int i = 0; i < strlen(argv[0]); i++) {
-    if(!(argv[0][i] >= '0' && argv[0][i] <= '9')) {
-      fprintf(stderr, "ERROR: Invalid credit card number: Bad number '%c'\n", argv[0][i]);
-      return 2;
+  for(int i = 0; i < strlen(argv[1]); i++) {
+    if(!(argv[1][i] >= '0' && argv[1][i] <= '9')) {
+      fprintf(stderr, "ERROR: Invalid credit card number: Bad number '%c'\n", argv[1][i]);
+      return 1;
     }
   }
 
@@ -30,18 +29,23 @@ int main(int argc, char * argv[]){
   //  --  printf("VALID\n");
   //  -- printf("INVALID\n");
   int total = 0;
-  for(int i = 0; i < strlen(argv[0]); i++) {
-    int val = argv[0][i] - '0';
-    if(val*2 > 9) {
-      val = val % 10 + 1;
+  for(int i = 0; i < strlen(argv[1]); i++) {
+    int val = argv[1][i] - '0';    
+    if(i % 2 == 0) {
+      val *= 2;
+      if(val*2 > 9) {
+        val = val% 10 + 1;
+      }
     }
     total += val;
   }
 
   if(total%10 == 0) {
     printf("VALID\n");
+    return 0;
   } else {
     printf("INVALID\n");
+    return 2;
   }
 
 
