@@ -1,8 +1,17 @@
 #!/bin/bash
 
 STR=""
-for var in {1..16}
+./check $STR > /dev/null 2>&1
+VAL=$?
+while [ $VAL -ne 0 ]
 do
-    STR="$STR$(($RANDOM % 9))"
+    for var in {1..16}
+    do
+        STR="$STR$(($RANDOM % 9))"
+    done
+    RETURN=$STR
+    ./check $STR > /dev/null 2>&1
+    VAL=$?
+    STR=""
 done
-./check $STR | cat -
+echo $RETURN
