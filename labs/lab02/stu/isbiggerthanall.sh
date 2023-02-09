@@ -15,19 +15,14 @@ elif [ ! -e $2 ]
 then
   echo "ERROR: File $2 does not exist" 1>&2
 else
-  i=1
-  for path in $*
+  for file in $*
   do
-    if ! [ $i -eq 1 ]
+    if [ -e $file ]
     then
-    for file in $path
-    do
-      if [ $(wc -c $file | cut -d " " -f 1) -gt $1 ] || [ $(wc -c $file | cut -d " " -f 1) -eq $1 ]
+      if [ $(wc -c $file | cut -d " " -f 1) -ge $1 ]
       then
         echo $file
       fi
-    done
     fi
-    let i++
   done
 fi
