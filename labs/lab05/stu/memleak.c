@@ -22,7 +22,7 @@ int * doubleup(int * a, int size){
     new_a[i] = a[i];
     new_a[i+size] = a[i];
   }  
-
+  free(a);
   return new_a;
 } 
 
@@ -47,13 +47,14 @@ int main(int argc, char * argv[]){
   printf("-----------\n");
 
   //doubleup
+  
   a = doubleup(a, TEST_SIZE);
-
+  
   //print the array
   for(i=0; i<TEST_SIZE*2;i++){
     printf("%d ", a[i]);
   }
   printf("\n");
-
+  free(a);
   return 0;
 }
