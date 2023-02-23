@@ -1,23 +1,22 @@
-all: runme runme
+all: runme runme_too
 
-executable: library.o fun.o runme.c
-	gcc runme.o library.o fun.o -o runme
+runme: library.o fun.o runme.o
+	gcc library.o fun.o runme.o -o runme
 
-executable1: library.o fun.o runme_too.c
-	gcc runme_too.o library.o fun.o -o runme_too
+runme_too: library.o fun.o runme_too.o
+	gcc library.o fun.o runme_too.o -o runme_too
+
+runme.o: runme.c
+	gcc -c runme.c -o runme.o
+
+runme_too.o: runme_too.c
+	gcc -c runme_too.c -o runme_too.o
 
 library.o: library.c library.h
 	gcc -c library.c -o library.o
 
 fun.o: fun.c fun.h
 	gcc -c fun.c -o fun.o
-	
-runme.o: runme.c runme.h
-	gcc -c runme.c -o runme.o
-
-runme_too.o: runme_too.c runme_too.h
-	gcc -c runme_too.c -o runme_too.o
-
 
 clean:
 	rm -f runme runme_too *.o
