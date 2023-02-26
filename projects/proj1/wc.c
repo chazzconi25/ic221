@@ -9,17 +9,17 @@ int main(int argc, char *argv[]) {
     int lineCount = 0;
     int wordCount = 0;
     char next = fgetc(fp);
-    int prevSpace = isspace(next);
     while(!feof(fp)) {
+        charCount++;
         if(next == '\n') {
             lineCount++;
         }
-        charCount++;
-        next = fgetc(fp);
-        if(isspace(next) && prevSpace) {
+        char temp = fgetc(fp);
+        if(!((isspace(next) != 0 && isspace(temp) != 0) || (isspace(next) == 0 && isspace(temp) == 0))) {
             wordCount++;
-        } 
+        }
+        next = temp;
     }
-    printf(" %d %d %d\n", lineCount, wordCount, charCount);
+    printf(" %d %d %d\n", lineCount, wordCount/2, charCount);
     return 0;
 }
