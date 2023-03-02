@@ -1,15 +1,23 @@
 #include <ctype.h>
 #include <stdio.h>
 int main(int argc, char *argv[]) {
-    FILE *fp = fopen(argv[1], "r");
+    FILE *fp;
+    if(argv[1]) {
+        fp = fopen(argv[1], "r");
+    } else {
+        fp = stdin;
+    }
+    
     if(fp == NULL) {
+        printf("AAAAAAAAAAa");
         return 1;
     }
     int charCount = 0;
     int lineCount = 0;
     int wordCount = 0;
     char next = fgetc(fp);
-    while(!feof(fp)) {
+    while(!feof(fp) || (fp == stdin && next != '\n')) {
+        printf("%d", next != '\n');
         charCount++;
         if(next == '\n') {
             lineCount++;
