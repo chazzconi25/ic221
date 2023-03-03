@@ -7,15 +7,6 @@ int main(int argc, char *argv[]) {
 
     }
     FILE *fp = fopen(argv[1], "r");
-=======
-    FILE *fp;
-    if(argv[1]) {
-        fp = fopen(argv[1], "r");
-    } else {
-        fp = stdin;
-    }
-    
->>>>>>> 0aab333c00d44371bcd43489ff74831e9a0c0dfa
     if(fp == NULL) {
         printf("AAAAAAAAAAa");
         return 1;
