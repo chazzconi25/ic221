@@ -1,6 +1,10 @@
 #include <ctype.h>
 #include <stdio.h>
 int main(int argc, char *argv[]) {
+    FILE **files = FILE*[argc];
+    for(int i = 0; i < argc; i++) {
+
+    }
     FILE *fp = fopen(argv[1], "r");
     if(fp == NULL) {
         return 1;
