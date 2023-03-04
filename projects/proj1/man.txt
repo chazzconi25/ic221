@@ -1,0 +1,33 @@
+WC(1)                                                     User Commands                                                     WC(1)
+
+NAME
+       wc - print newline, word, and character counts for each file 
+
+SYNOPSIS
+       wc [-c -l -w] [file ...]
+
+DESCRIPTION
+       Print  newline,  word,  and  character  counts for each FILE, and a total line if more than one FILE is specified.  A word is a
+       non-zero-length sequence of characters delimited by white space.
+
+       With no FILE, or when FILE is +, read standard input.
+
+       The options below may be used to select which counts are printed, always in the following order: newline, word, character
+
+       -c, --chars
+              print the character counts
+
+       -l, --lines
+              print the newline counts
+
+       -w, --words
+              print the word counts
+
+AUTHOR
+       Written by Charlie Francesconi
+
+REPORTING BUGS
+       Report wc bugs to m251806@usna.edu
+
+COPYRIGHT
+       CC-BY License 2023
