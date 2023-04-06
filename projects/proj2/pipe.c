@@ -68,7 +68,7 @@ int main(int argc, char * argv[]){
 		if(pipeline[i+1][0] != NULL){
 			
 			// TODO: create (open) the current pipe
-
+			pipe(cur_pipe);
 		}
 
 		cpid = fork();
@@ -79,26 +79,28 @@ int main(int argc, char * argv[]){
 			if( pipeline[i+1][0] != NULL ) {
 				
 				// TODO: close the read end of the right pipe
-
+				close(cur_pipe[0]);
 				// TODO: close the old stdout
-
+				close(1);
 				// TODO: duplicate the write end of the right pipe to stdout		
-
+				dup2(cur_pipe[1], 1);
 			}
 
 			// If not at the start, handle the 'left' side of this process
 			if( i > 0 ) {
 				
 				// TODO: Close the write end of the left pipe
-
+				close(cur_pipe[1]);
 				// TODO: Close the old stdin
-
+				close(0);
 				// TODO: Duplicate the read end of the left pipe to stdin
-
+				dup2(cur_pipe[0], 0);
 			}
 
 			// TODO: Execute this stage in pipeline with execvp()
-
+			execvp(pipeline[i][0], pipeline[i]);
+			perror("exec");
+			exit(2);
 
 
 		}
@@ -106,11 +108,13 @@ int main(int argc, char * argv[]){
 		
 			// TODO: Shift pipes -- set current to last
 			//   (move both the 'read' and 'write' ends!)
-
+			pipe(last_pipe);
+			cur_pipe[0] = last_pipe[0];
+			cur_pipe[1] = last_pipe[1];
 
 			
 			// TODO: close the write end of last_pipe
-
+			close(last_pipe[1]);
 		}
 		else {	/*ERROR*/
 			perror("fork");

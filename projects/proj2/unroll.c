@@ -60,20 +60,20 @@ int main(int argc, char * argv[]){
      
 	// Execute each command
 	for (i = 0; pipeline[i][0] != NULL; i++) {
-    
 		cpid = fork();
 		if (cpid == 0) {
 			
 			// I am a child process!
 			// TODO: Set my PGID to the value saved in 'pgroup'
-
+			setpgid(cpid, pgroup);
 			
 			// TODO: execute the command with execvp()
 			//   The command itself is pipeline[i][0]
 			//   The full argv array pointer is pipeline[i]
 			//   If execvp fails, raise error and exit
-
-
+			execvp(pipeline[i][0], pipeline[i]);
+			perror("exec");
+			exit(2);
 
 		} else if (cpid > 0) {
 			
@@ -81,8 +81,9 @@ int main(int argc, char * argv[]){
 			if (i == 0) { // if first child:
 				
 				// TODO: set 1st child process PGID to match its own PID
-					
-				// TODO: save 1st child's PGID in 'pgroup' 			
+				setpgid(cpid, cpid);
+				// TODO: save 1st child's PGID in 'pgroup' 
+				pgroup = getpgid(cpid);
 
 			}
 
