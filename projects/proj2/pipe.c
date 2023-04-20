@@ -66,7 +66,6 @@ int main(int argc, char * argv[]){
 		// Create the current pipe *unless* there is no next command
 		//   (i.e., unless this is the last one)
 		if(pipeline[i+1][0] != NULL){
-			
 			// TODO: create (open) the current pipe
 			pipe(cur_pipe);
 		}
@@ -90,27 +89,25 @@ int main(int argc, char * argv[]){
 			if( i > 0 ) {
 				
 				// TODO: Close the write end of the left pipe
-				close(cur_pipe[1]);
+				close(last_pipe[1]);
 				// TODO: Close the old stdin
 				close(0);
 				// TODO: Duplicate the read end of the left pipe to stdin
-				dup2(cur_pipe[0], 0);
+				dup2(last_pipe[0], 0);
 			}
 
 			// TODO: Execute this stage in pipeline with execvp()
 			execvp(pipeline[i][0], pipeline[i]);
 			perror("exec");
 			exit(2);
-
-
 		}
 		else if ( cpid > 0) {		/*PARENT*/
 		
 			// TODO: Shift pipes -- set current to last
 			//   (move both the 'read' and 'write' ends!)
 			pipe(last_pipe);
-			cur_pipe[0] = last_pipe[0];
-			cur_pipe[1] = last_pipe[1];
+			last_pipe[0] = cur_pipe[0];
+			last_pipe[1] = cur_pipe[1];
 
 			
 			// TODO: close the write end of last_pipe
