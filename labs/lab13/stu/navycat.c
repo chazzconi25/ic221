@@ -32,8 +32,8 @@ void * sender() {
 	//   it and send it to the socket
 	//   Use 's' to count bytes to send
 	// Exit if there is a write error
-	while( (s = read(0, in_buf, BUF_SIZE)) > 0){
-		if( write(sock, in_buf, s) < 0){
+	while( (s = read(0, out_buf, BUF_SIZE)) > 0){
+		if( write(sock, out_buf, s) < 0){
 			perror("write");
 			exit(1);
 		}
@@ -45,8 +45,8 @@ void * receiver() {
 	//   it and send it to stdout
 	//   Use 'r' to count bytes read
 	// Exit if there is a write error
-	while( (r = read(sock, out_buf, BUF_SIZE)) > 0){
-		if(write(1, out_buf, r) < 0){
+	while( (r = read(sock, in_buf, BUF_SIZE)) > 0){
+		if(write(1, in_buf, r) < 0){
 			perror("write");
 			exit(1);
 		}
@@ -96,7 +96,7 @@ int main(int argc, char * argv[]){
 
 
 	// TODO: Connect the socket
-	if(connect(sock, (struct sockaddr *) saddr, sizeof(struct sockaddr_in)) < 0){
+	if(connect(sock, (struct sockaddr *) saddr, sizeof(*saddr)) < 0){
 		perror("connect");
 		exit(1);
 	}
