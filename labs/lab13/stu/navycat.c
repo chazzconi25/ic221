@@ -97,7 +97,7 @@ int main(int argc, char * argv[]){
 
 	// TODO: Connect the socket
 	if(connect(sock, (struct sockaddr *) saddr, sizeof(*saddr)) < 0){
-		perror("connect");
+		perror("connect: connection refused\n");
 		exit(1);
 	}
 
@@ -110,8 +110,6 @@ int main(int argc, char * argv[]){
 	// TODO: Have the main thread wait on the sender and receiver threads
 	pthread_join(send_thread, NULL);
 	pthread_join(receive_thread, NULL);
-
-
 
 	exit(0);
 }
